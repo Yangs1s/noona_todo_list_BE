@@ -6,7 +6,7 @@ taskController.createTask = async (req, res) => {
   try {
     const { task, isCompleted } = req.body;
     const newTask = new Task({ task, isCompleted });
-    await newTask.save().select("-__v");
+    await newTask.save();
     res.status(200).json({
       message: "태스크 추가 성공",
       tasks: newTask,
@@ -46,8 +46,8 @@ taskController.updateTask = async (req, res) => {
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       { isCompleted },
-      { new: true }.select("-__v")
-    );
+      { new: true }
+    ).select("-__v");
     res.status(200).json({
       message: "업데이트 성공",
       tasks: updatedTask,
