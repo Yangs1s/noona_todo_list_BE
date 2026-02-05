@@ -15,7 +15,6 @@ app.use(bodyParser.json());
 app.use("/api", indexRouter);
 
 mongoose.connect(MONGO_URI).catch((err) => {
-  console.log(MONGO_URI);
   console.log("MongoDB connection error:", err);
 });
 
