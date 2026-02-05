@@ -5,9 +5,8 @@ const taskController = {};
 taskController.createTask = async (req, res) => {
   try {
     const { task, isCompleted } = req.body;
-
     const newTask = new Task({ task, isCompleted });
-    await newTask.save();
+    await newTask.save().select("-__v");
     res.status(200).json({
       message: "태스크 추가 성공",
       tasks: newTask,
@@ -22,7 +21,7 @@ taskController.createTask = async (req, res) => {
 // Task 조회
 taskController.getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find().select("-__v");
     res.status(200).json({
       message: "Tasks fetched successfully",
       tasks: tasks,
@@ -47,7 +46,7 @@ taskController.updateTask = async (req, res) => {
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       { isCompleted },
-      { new: true }
+      { new: true }.select("-__v")
     );
     res.status(200).json({
       message: "업데이트 성공",
