@@ -19,5 +19,5 @@ mongoose.connect(MONGO_URI).catch((err) => {
 });
 
 app.listen(process.env.PORT || 5001, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+  console.log("서버 작동 시작...");
 });
