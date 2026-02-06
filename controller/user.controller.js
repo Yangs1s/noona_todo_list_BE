@@ -2,6 +2,7 @@ const userController = {};
 const User = require("../model/User");
 const bcrypt = require("bcryptjs");
 
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
 let saltCount = 10;
 userController.register = async (req, res) => {
   try {
@@ -10,6 +11,18 @@ userController.register = async (req, res) => {
     if (!email || !password) {
       throw new Error("이메일과 비밀번호를 입력해주세요");
     }
+
+    if (!passwordRegex.test(password)) {
+      return res
+        .status(400)
+        .json({ message: "대문자, 소문자, 숫자 포함 8자 이상" });
+    }
+    if (password.length < 10) {
+      return res
+        .status(400)
+        .json({ message: "비밀번호는 10자 이상이어야 합니다" });
+    }
+
     // 1. user가 기존 유저인지
     const existUser = await User.findOne({ email });
     if (existUser) {
