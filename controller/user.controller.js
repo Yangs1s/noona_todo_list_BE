@@ -17,11 +17,6 @@ userController.register = async (req, res) => {
         .status(400)
         .json({ message: "대문자, 소문자, 숫자 포함 8자 이상이여야 합니다." });
     }
-    if (password.length < 10) {
-      return res
-        .status(400)
-        .json({ message: "비밀번호는 10자 이상이어야 합니다" });
-    }
 
     // 1. user가 기존 유저인지
     const existUser = await User.findOne({ email });
