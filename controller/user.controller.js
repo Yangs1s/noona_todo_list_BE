@@ -15,7 +15,7 @@ userController.register = async (req, res) => {
     if (!passwordRegex.test(password)) {
       return res
         .status(400)
-        .json({ message: "대문자, 소문자, 숫자 포함 8자 이상" });
+        .json({ message: "대문자, 소문자, 숫자 포함 8자 이상이여야 합니다." });
     }
     if (password.length < 10) {
       return res
