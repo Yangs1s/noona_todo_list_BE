@@ -19,7 +19,6 @@ const userSchema = Schema(
     password: {
       type: String,
       required: true,
-      min: [8, "비밀번호는 최소 8자이상이여야 합니다."],
     },
   },
   { timestamps: true }
