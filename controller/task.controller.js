@@ -19,10 +19,11 @@ taskController.createTask = async (req, res) => {
   }
 };
 
-// Task 조회
+// Task 조회 - 현재 로그인한 유저의 Task만
 taskController.getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({}).populate("author");
+    const { userId } = req;
+    const tasks = await Task.find({ author: userId }).populate("author");
     res.status(200).json({
       message: "Tasks fetched successfully",
       tasks: tasks,
@@ -48,7 +49,10 @@ taskController.updateTask = async (req, res) => {
       id,
       { isCompleted },
       { new: true }
-    ).select("-__v");
+    )
+      .select("-__v")
+      .populate("author"); // author 정보 포함
+
     res.status(200).json({
       message: "업데이트 성공",
       tasks: updatedTask,
