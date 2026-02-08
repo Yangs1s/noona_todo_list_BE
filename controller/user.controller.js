@@ -4,6 +4,24 @@ const bcrypt = require("bcryptjs");
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
 let saltCount = 10;
+
+userController.checkEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const existUser = await User.findOne({ email });
+    if (existUser) {
+      return res
+        .status(400)
+        .json({ message: "가입된 유저가 있습니다.", success: false });
+    }
+    res
+      .status(200)
+      .json({ message: "사용 가능한 이메일입니다.", success: true });
+  } catch (error) {
+    res.status(400).json({ message: error.message, success: false });
+  }
+};
+
 userController.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -55,7 +73,9 @@ userController.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email }, "-createdAt -updatedAt -__v");
-
+    if (!email || !password) {
+      throw new Error("이메일과 비밀번호를 입력해주세요");
+    }
     // 암호화된 패스워드와 입력 패스워드를 비교
     if (user) {
       const isMatch = await bcrypt.compare(password, user.password);

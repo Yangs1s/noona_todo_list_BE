@@ -4,6 +4,7 @@ const authController = require("../controller/auth.controller");
 const router = express.Router();
 
 router.post("/", userController.register);
+router.post("/check-email", userController.checkEmail);
 
 // 왜 get을 쓰지 않고 포스트를 쓰는가?
 // 유저의 비밀번호, 아이디 정보를 가져와야하는데
