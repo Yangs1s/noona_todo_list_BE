@@ -11,7 +11,7 @@ router.post("/", userController.register);
 // post가 get 방식보다 더 안전하다.
 router.post("/login", userController.login);
 router.get("/me", authController.authenticate, userController.getUserInfo);
-
+router.get("/logout", authController.authenticate, userController.logout);
 // router.get("/profile", userController.getProfile);
 // router.put("/profile", userController.updateProfile);
 // router.delete("/profile", userController.deleteProfile);

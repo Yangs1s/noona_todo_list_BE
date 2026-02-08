@@ -72,6 +72,14 @@ userController.login = async (req, res) => {
     // 이메일 / 비밀번호 중 뭐가 틀렸는지 구분
     throw new Error("아이디 혹은 비밀번호가 일치하지 않아요");
   } catch (error) {
+    console.error("에러", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+userController.logout = async (req, res) => {
+  try {
+    res.status(200).json({ message: "로그아웃 성공" });
+  } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };

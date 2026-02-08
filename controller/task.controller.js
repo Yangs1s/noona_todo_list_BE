@@ -8,6 +8,7 @@ taskController.createTask = async (req, res) => {
     const { userId } = req;
     const newTask = new Task({ task, isCompleted, author: userId });
     await newTask.save();
+
     res.status(200).json({
       message: "태스크 추가 성공",
       tasks: newTask,
